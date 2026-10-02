@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>InterviewPro | Задача 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../styles/style.css">
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; width: 100%; }
+    .tasks-layout { display: flex; flex-direction: row; height: 100vh; width: 100vw; overflow: hidden; }
+    .tasks-sidebar { width: 320px; min-width: 320px; max-width: 320px; background: var(--bg-secondary); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; overflow-y: auto; height: 100vh; flex-shrink: 0; }
+    .tasks-sidebar-header { padding: 20px; border-bottom: 1px solid var(--border-color); background: var(--bg-secondary); position: sticky; top: 0; z-index: 10; }
+    .task-list { list-style: none; padding: 0; margin: 0; }
+    .task-item { padding: 13px 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background 0.2s; font-size: 0.9rem; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .task-item:hover { background: rgba(255,255,255,0.05); }
+    .task-item.active { background: var(--accent-primary-alpha); border-left: 4px solid var(--accent-primary); }
+    .task-main { flex: 1; display: flex; flex-direction: column; background: var(--bg-primary); overflow-y: auto; min-width: 0; }
+    .task-content { padding: 32px 40px; max-width: 860px; width: 100%; box-sizing: border-box; }
+    .solve-btn { background: linear-gradient(135deg, #005bff 0%, #00d2ff 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0,91,255,0.3); transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; }
+    .solve-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,91,255,0.4); color: white; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 15px 40px; border-bottom: 1px solid var(--border-color); background: var(--bg-secondary); width: 100%; box-sizing: border-box; flex-shrink: 0; }
+    .topbar > div { flex: 1; display: flex; }
+
+    /* Collapsible sections */
+    .section-details { margin-bottom: 12px; border-radius: 10px; border: 1px solid var(--border-color); overflow: hidden; background: var(--bg-secondary); }
+    .section-details summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      list-style: none;
+      user-select: none;
+      transition: background 0.2s;
+      color: var(--text-primary);
+    }
+    .section-details summary::-webkit-details-marker { display: none; }
+    .section-details summary::before {
+      content: '▶';
+      font-size: 0.7rem;
+      transition: transform 0.2s;
+      color: var(--accent-primary);
+      flex-shrink: 0;
+    }
+    .section-details[open] > summary::before {
+      transform: rotate(90deg);
+    }
+    .section-details summary:hover { background: rgba(255,255,255,0.05); }
+    .section-body {
+      padding: 16px 20px 20px 20px;
+      border-top: 1px solid var(--border-color);
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    /* Code block inside collapsible */
+    .code-window { background: #1a1a1a; border-radius: 8px; border: 1px solid #2d2d2d; position: relative; overflow-x: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+    .code-window pre { margin: 0; font-family: 'Consolas', 'Fira Code', 'Courier New', monospace; font-size: 0.92rem; color: #d4d4d4; padding: 14px 20px; }
+    .mac-buttons { padding: 10px 15px 0 15px; display: flex; gap: 6px; }
+    .mac-btn { width: 12px; height: 12px; border-radius: 50%; }
+    .mac-close { background: #ff5f56; }
+    .mac-min { background: #ffbd2e; }
+    .mac-max { background: #27c93f; }
+    .copy-btn {
+      position: absolute; top: 8px; right: 12px;
+      padding: 4px 10px; background: rgba(255,255,255,0.08);
+      color: #ccc; border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 5px; cursor: pointer; font-size: 0.78rem;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.16); color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="tasks-layout">
+    <aside class="tasks-sidebar">
+      <div class="tasks-sidebar-header">
+        <h2 style="margin: 0; font-size: 1.2rem;">🚀 Задачи</h2>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px;">Всего задач: 22</div>
+      </div>
+      <ul class="task-list">
+        <li class="task-item" id="nav-task-1" onclick="window.location.href='task_01.html'" title="1. Разработчик дал на ревью код сво...">1. Разработчик дал на ревью код сво...</li>
+        <li class="task-item" id="nav-task-2" onclick="window.location.href='task_02.html'" title="2. Что выведет этот код">2. Что выведет этот код</li>
+        <li class="task-item active" id="nav-task-3" onclick="window.location.href='task_03.html'" title="3. Что выведет этот код, и почему?">3. Что выведет этот код, и почему?</li>
+        <li class="task-item" id="nav-task-4" onclick="window.location.href='task_04.html'" title="4. Есть набор урлов.">4. Есть набор урлов.</li>
+        <li class="task-item" id="nav-task-5" onclick="window.location.href='task_05.html'" title="5. У нас есть база данных с паролям...">5. У нас есть база данных с паролям...</li>
+        <li class="task-item" id="nav-task-6" onclick="window.location.href='task_06.html'" title="6. Что выведет на экран эта программа?">6. Что выведет на экран эта программа?</li>
+        <li class="task-item" id="nav-task-7" onclick="window.location.href='task_07.html'" title="7. Нужно написать простую библиотек...">7. Нужно написать простую библиотек...</li>
+        <li class="task-item" id="nav-task-8" onclick="window.location.href='task_08.html'" title="8. Это почти реальный пример из одн...">8. Это почти реальный пример из одн...</li>
+        <li class="task-item" id="nav-task-9" onclick="window.location.href='task_09.html'" title="9. Написать код функции, которая де...">9. Написать код функции, которая де...</li>
+        <li class="task-item" id="nav-task-10" onclick="window.location.href='task_10.html'" title="10. Что выведет данная программа? Он...">10. Что выведет данная программа? Он...</li>
+        <li class="task-item" id="nav-task-11" onclick="window.location.href='task_11.html'" title="11. Рассказать, как устроен LRU cache">11. Рассказать, как устроен LRU cache</li>
+        <li class="task-item" id="nav-task-12" onclick="window.location.href='task_12.html'" title="12. Является ли слайс монотонным?">12. Является ли слайс монотонным?</li>
+        <li class="task-item" id="nav-task-13" onclick="window.location.href='task_13.html'" title="13. Дан слайс целых чисел. Напишите ...">13. Дан слайс целых чисел. Напишите ...</li>
+        <li class="task-item" id="nav-task-14" onclick="window.location.href='task_14.html'" title="14. Требуется реализовать функцию zi...">14. Требуется реализовать функцию zi...</li>
+        <li class="task-item" id="nav-task-15" onclick="window.location.href='task_15.html'" title="15. Требуется реализовать функцию un...">15. Требуется реализовать функцию un...</li>
+        <li class="task-item" id="nav-task-16" onclick="window.location.href='task_16.html'" title="16. Что выведет программа? Почему?">16. Что выведет программа? Почему?</li>
+        <li class="task-item" id="nav-task-17" onclick="window.location.href='task_17.html'" title="17. Что выведет программа?">17. Что выведет программа?</li>
+        <li class="task-item" id="nav-task-18" onclick="window.location.href='task_18.html'" title="18. Что выведет программа?">18. Что выведет программа?</li>
+        <li class="task-item" id="nav-task-19" onclick="window.location.href='task_19.html'" title="19. Как устроена структура данных &q...">19. Как устроена структура данных &q...</li>
+        <li class="task-item" id="nav-task-20" onclick="window.location.href='task_20.html'" title="20. Как преобразовать строку в число...">20. Как преобразовать строку в число...</li>
+        <li class="task-item" id="nav-task-21" onclick="window.location.href='task_21.html'" title="21. Какой функцией стандартной библи...">21. Какой функцией стандартной библи...</li>
+        <li class="task-item" id="nav-task-22" onclick="window.location.href='task_22.html'" title="22. В каком варианте преобразования ...">22. В каком варианте преобразования ...</li>
+      </ul>
+    </aside>
+
+    <main class="task-main">
+      <div class="topbar">
+        <div style="align-items: center; justify-content: flex-start;">
+            <div style="font-weight: bold; color: var(--text-primary); font-size: 1.1rem;">Задача 3</div>
+            <span style="background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.35); font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; margin-left: 12px; white-space: nowrap;">🎯 18 грейд | ⏱️ 5 мин | 📊 264 раза</span>
+        </div>
+        <div style="justify-content: center; align-items: center;">
+            <div id="timer-display" data-minutes="2" style="font-weight: bold; font-size: 1.3rem; color: #ff5b5b;">02:00</div>
+        </div>
+        <div style="justify-content: flex-end; align-items: center;">
+            <a href="https://go.dev/play/" target="_blank" class="solve-btn">💻 Решать задачу</a>
+        </div>
+      </div>
+      
+      <div class="task-content" id="task-content">
+
+        <!-- Описание задачи (всегда видно) -->
+        <div style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 24px; color: var(--text-primary); font-weight: 500;">
+            Что выведет этот код, и почему?
+        </div>
+        <div style="margin-bottom: 20px; color: var(--text-secondary); line-height: 1.65; font-size: 1rem;"><div style="margin: 12px 0 16px 0;"></div></div>
+
+        <!-- Выпадашки -->
+        <details class="section-details">
+            <summary>📄 Исходный код</summary>
+            <div class="section-body">
+                <div class="code-window">
+                    <div class="mac-buttons">
+                        <div class="mac-btn mac-close"></div>
+                        <div class="mac-btn mac-min"></div>
+                        <div class="mac-btn mac-max"></div>
+                    </div>
+                    <button class="copy-btn" onclick="copyCode(this)">📋 Копировать</button>
+                    <pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func main() {
+	lst := []string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;}
+	for k, v := range lst {
+		if k == 0 {
+			lst = []string{&quot;aa&quot;, &quot;bb&quot;, &quot;cc&quot;, &quot;dd&quot;}
+		}
+		fmt.Println(v)
+	}
+}
+</code></pre>
+                </div>
+            </div>
+        </details>
+        <details class="section-details">
+            <summary>🔍 Детали реализации</summary>
+            <div class="section-body">
+                <pre><code class="language-go">Это задача даже не на специфику работы оператора range, а просто на знание одного из
+основных принципов языка — everything in Go is passed by value. Массив является по сути
+struct&#x27;ом из трех полей — `ссылка на array`, `len` и `cap`, при вызове range происходит
+ровно то же самое, что и при вызове функции — эта структура копируется (а array на
+который ссылаемся — нет). Присваивая переменной новое значение мы никак не меняем
+исходный array, поэтому и выведется
+a
+b
+c
+d
+
+А вот если менять значения в нижележащем array&#x27;е, то они будут меняться, и range их
+увидит
+func main() {
+lst := []string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;}
+for k, v := range lst {
+if k == 0 {
+lst[3] = &quot;z&quot;
+}
+fmt.Println(v)
+}
+}
+выведет
+a
+b
+c
+z</code></pre>
+        </div>
+            </div>
+        </details>
+        
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.closest('.code-window').querySelector('code');
+      if (!code) return;
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        const orig = btn.innerText;
+        btn.innerText = '✅ Скопировано!';
+        btn.style.background = 'rgba(52,211,153,0.2)';
+        btn.style.borderColor = '#34d399';
+        setTimeout(() => {
+          btn.innerText = orig;
+          btn.style.background = 'rgba(255,255,255,0.08)';
+          btn.style.borderColor = 'rgba(255,255,255,0.15)';
+        }, 2000);
+      });
+    }
+
+    let timerInterval = null;
+    let secondsRemaining = 0;
+    function startTimer() {
+      const display = document.getElementById('timer-display');
+      if (!display) return;
+      const mins = parseInt(display.getAttribute('data-minutes') || '2', 10);
+      secondsRemaining = mins * 60;
+      if (secondsRemaining <= 0) return;
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (secondsRemaining <= 0) { clearInterval(timerInterval); return; }
+        secondsRemaining--;
+        const m = Math.floor(secondsRemaining / 60);
+        const s = secondsRemaining % 60;
+        display.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

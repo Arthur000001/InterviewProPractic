@@ -1,0 +1,30 @@
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 108px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  color: var(--text-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  background: var(--accent-primary);
+  color: #fff;
+  outline: 2px solid transparent;
+}
+
+@media (max-width: 600px) {
+  .back-to-top { right: 12px; bottom: 12px; min-width: 44px; }
+}

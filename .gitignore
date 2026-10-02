@@ -1,0 +1,17 @@
+# IDEs
+.idea/
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environments
+node_modules/
+.agents/venv/
+
+# Cache & Tmp
+__pycache__/
+*.py[cod]
+.agents/tmp/
+.notes/

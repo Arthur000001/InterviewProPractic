@@ -1,0 +1,50 @@
+.ozon-code-copy {
+  position: relative;
+  margin: 10px 0;
+}
+
+.ozon-code-copy pre {
+  margin: 0;
+  padding-top: 48px !important;
+}
+
+.ozon-code-copy-button {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  z-index: 1;
+  padding: 5px 10px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 6px;
+  background: #1e293b;
+  color: #e2e8f0;
+  font: 600 12px/1.3 sans-serif;
+  cursor: pointer;
+}
+
+.ozon-code-copy-button:hover,
+.ozon-code-copy-button:focus-visible {
+  background: #334155;
+  border-color: #60a5fa;
+}
+
+.playground-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f1f5f9 !important;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.playground-btn:hover {
+  background: rgba(0, 173, 216, 0.15);
+  border-color: #00add8;
+  color: #38bdf8 !important;
+}

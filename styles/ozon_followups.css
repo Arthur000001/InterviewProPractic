@@ -1,0 +1,56 @@
+.theory-followups {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.theory-followups > .secondary-question {
+  margin-bottom: 10px;
+}
+
+.theory-followups > .secondary-question:last-child {
+  margin-bottom: 0;
+}
+
+.quizlet-chain-card {
+  display: block;
+  min-height: 0;
+}
+
+.quizlet-thread {
+  width: 100%;
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 22px 26px 30px;
+  box-sizing: border-box;
+}
+
+.quizlet-thread-step {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 22px 18px;
+  border-radius: 10px;
+}
+
+.quizlet-thread-done {
+  margin-bottom: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.quizlet-thread-active {
+  border-left: 4px solid #3b82f6;
+  background: rgba(59, 130, 246, 0.06);
+}
+
+.quizlet-thread .quizlet-question {
+  margin: 14px 0 18px;
+}
+
+.quizlet-thread .quizlet-answer {
+  max-height: none;
+  overflow: visible;
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
